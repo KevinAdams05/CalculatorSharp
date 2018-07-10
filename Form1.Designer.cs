@@ -540,7 +540,7 @@ namespace Calculator
             this.helpTopicstoolStripMenuItem.Name = "helpTopicstoolStripMenuItem";
             this.helpTopicstoolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.helpTopicstoolStripMenuItem.Text = "Documentation";
-            this.helpTopicstoolStripMenuItem.Click += new System.EventHandler(this.helpPopup);
+            this.helpTopicstoolStripMenuItem.Click += new System.EventHandler(this.HelpPopup);
             // 
             // aboutCalculatorToolStripMenuItem
             // 

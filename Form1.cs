@@ -15,37 +15,38 @@ namespace Calculator
 {
     internal partial class Calculator : Form
     {
-        private bool m_useCommaSeparators;//Settings
-        private AboutBox2 popUp; //This is used for the "About" window
+        private bool m_useCommaSeparators;// Settings
+        private AboutBox2 popUp; // This is used for the "About" window
 
         public Calculator()
         { 
-            //Initialize the settings
+            // Initialize the settings
             m_useCommaSeparators = false;
             popUp = new AboutBox2();
             InitializeComponent();
         }
 
-        //The majority of the System.Windows.Forms.Button functions below simply call the main functions of calcEngine
+        // The majority of the System.Windows.Forms.Button functions below simply call the main functions of calcEngine
         private void updateScreen()
         {
-            //Updates the text based on the data within the calcEngine
-            calcScreen.Text = formatDisplay(Convert.ToString(calcEngine.getDisplay()));
+            // Updates the text based on the data within the calcEngine
+            calcScreen.Text = FormatDisplay(Convert.ToString(CalcEngine.GetDisplay()));
         }
 
-        //When a key is pressed, the number is checked and we pass that value into the calculator engine
+        // When a key is pressed, the number is checked and we pass that value into the calculator engine
         private void number_btn(object sender, EventArgs e)
         {
-            if (sender is System.Windows.Forms.Button)
+            Button num = sender as Button;
+            if (num != null)
             {
-                if (!calcEngine.m_openParen)
+                if (!CalcEngine.m_openParen)
                 {
                     status_txt.Text = "";
                 }
-                System.Windows.Forms.Button num = sender as System.Windows.Forms.Button;
+
                 int numValue;
                 switch (num.Name)
-                { //Convert the System.Windows.Forms.Button pressed into a number which is stored in a string
+                { // Convert the System.Windows.Forms.Button pressed into a number which is stored in a string
                     case "one":
                         numValue = 1; break;
                     case "two":
@@ -67,33 +68,36 @@ namespace Calculator
                     default:
                         numValue = 0; break;
                 }
-                calcEngine.appendNum(numValue);
+
+                CalcEngine.AppendNum(numValue);
                 updateScreen();
-                if (calcEngine.m_operation == null)
+
+                if (CalcEngine.m_operation == null)
                 {
                     operation_txt.Text = "";
                 }
             }
         }
 
-        //The equals button will make some adjustments to the GUI before updating the screen based on values in calcEngine
+        // The equals button will make some adjustments to the GUI before updating the screen based on values in calcEngine
         private void equals_btn(object sender, EventArgs e)
         {
             if (sender is System.Windows.Forms.Button)
             {
-                //First deal with the notes that may  displayed in the status bar at the bottom
-                if (!calcEngine.m_openParen)
+                // First deal with the notes that may  displayed in the status bar at the bottom
+                if (!CalcEngine.m_openParen)
                 {
                     status_txt.Text = "";
                 }
-                if (calcEngine.m_openParen)
+
+                if (CalcEngine.m_openParen)
                 {
-                    status_txt.Text = calcEngine.equation + calcEngine.getDisplay().ToString();
+                    status_txt.Text = CalcEngine.equation + CalcEngine.GetDisplay().ToString();
                     paren_txt.Text = "";
                     operation_txt.Text = "";
                 }
-                //Attempt to solve the math
-                if (!calcEngine.solve())
+                // Attempt to solve the math
+                if (!CalcEngine.Solve())
                 {
                     status_txt.Text = "Sorry, only Chuck Norris can divide by Zero";
                     clear_All.PerformClick();
@@ -101,32 +105,32 @@ namespace Calculator
                 }
 
                 updateScreen();
-                if (calcEngine.m_closeParen)
+                if (CalcEngine.m_closeParen)
                 {
                     paren_txt.Text = "";
                 }
             }
         }
 
-        //Tell the calculator engine to clear itself
+        // Tell the calculator engine to clear itself
         private void clear_btn(object sender, EventArgs e)
         {
             if (sender is System.Windows.Forms.Button)
             {
-                System.Windows.Forms.Button clear_btn = sender as System.Windows.Forms.Button;
+                Button clear_btn = sender as Button;
                 switch (clear_btn.Name)
                 {
                     case "clear_All":
-                        calcEngine.clearAll();
+                        CalcEngine.ClearAll();
                         paren_txt.Text = "";
                         operation_txt.Text = "";
                         status_txt.Text = "";
                         updateScreen();
                         break;
                     case "clear_Entry":
-                        calcEngine.clear();
+                        CalcEngine.clear();
                         updateScreen();
-                        if (!calcEngine.m_openParen)
+                        if (!CalcEngine.m_openParen)
                         {
                             status_txt.Text = "";
                         }
@@ -135,115 +139,108 @@ namespace Calculator
             }
         }
 
-        //Pass an operation into the calc engine (+, -, *, /) 
+        // Pass an operation into the calc engine (+, -, *, /) 
         private void operation_btn(object sender, EventArgs e)
         {
-            if (sender is System.Windows.Forms.Button)
+            if (sender is Button)
             {
-                System.Windows.Forms.Button btn_clicked = sender as System.Windows.Forms.Button;
-                calcEngine.prepareOperation(btn_clicked.Name);
-                if (calcEngine.m_operation != null)
-                    operation_txt.Text = calcEngine.m_operation;
-                else
-                    operation_txt.Text = "";
+                Button btn_clicked = sender as Button;
+                CalcEngine.PrepareOperation(btn_clicked.Name);
+                operation_txt.Text = CalcEngine.m_operation ?? "";
                 updateScreen();
-                if (calcEngine.m_openParen)
+
+                if (CalcEngine.m_openParen)
                 {
-                    status_txt.Text = calcEngine.equation;
+                    status_txt.Text = CalcEngine.equation;
                 }
             }
         }
 
-        //Updates status text based on what button was pressed, and updates the engine
+        // Updates status text based on what button was pressed, and updates the engine
         private void memory_btn(object sender, EventArgs e)
         {
-            if (sender is System.Windows.Forms.Button && !calcEngine.m_openParen)
+            if (sender is System.Windows.Forms.Button && !CalcEngine.m_openParen)
             {
-                if (!calcEngine.m_openParen)
+                if (!CalcEngine.m_openParen)
                 {
                     status_txt.Text = "";
                 }
-                System.Windows.Forms.Button btn_clicked = sender as System.Windows.Forms.Button;
-                if(btn_clicked.Name.Equals("memClear"))
+
+                Button btnClicked = sender as Button;
+                if(btnClicked.Name.Equals("memClear"))
                 {
-                    if (calcEngine.m_memory == null)
-                    {
-                        status_txt.Text = "Nothing to clear";
-                    } else {
-                        status_txt.Text = "Memory cleared";
-                    }
+                    status_txt.Text = CalcEngine.m_memory == null ? "Nothing to clear" : "Memory cleared";
                 }
-                else if(btn_clicked.Name.Equals("memRecall"))
+                else if(btnClicked.Name.Equals("memRecall"))
                 {
-                    if (calcEngine.m_memory == null)
-                    {
-                        status_txt.Text = "Nothing to recall";
-                    } else {
-                        status_txt.Text = "Number recalled";
-                    }
+                    status_txt.Text = CalcEngine.m_memory == null ? "Nothing to recall" : "Number recalled";
                 }
-                else if(btn_clicked.Name.Equals("memAdd"))
+                else if(btnClicked.Name.Equals("memAdd"))
                 {
-                    if (calcEngine.m_memory == null)
+                    if (CalcEngine.m_memory == null)
                     {
                         status_txt.Text = "No number stored in memory";
-                    } else {
+                    }
+                    else
+                    {
                         status_txt.Text = "Number added";
                         mem_text.Text = "M";
                     }
                 }
-                calcEngine.memory(btn_clicked.Name);
+                CalcEngine.Memory(btnClicked.Name);
                 updateScreen();
             }
         }
 
-        //If a settings button is hit, pass its value into menu_Actions
+        // If a settings button is hit, pass its value into menu_Actions
         private void menu_btn(object sender, EventArgs e)
         {
             if (sender is ToolStripMenuItem)
             {
-                if (!calcEngine.m_openParen)
+                if (!CalcEngine.m_openParen)
                 {
                     status_txt.Text = "";
                 }
+
                 ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
                 menu_Actions(menuItem.Name);
                 updateScreen();
             }
         }
 
-        //Pass this trig buttons value into the calcEngine
+        // Pass this trig buttons value into the calcEngine
         private void trig_btn(object sender, EventArgs e)
         {
-            if (sender is System.Windows.Forms.Button)
+            if (sender is Button)
             {
-                if (!calcEngine.m_openParen)
+                if (!CalcEngine.m_openParen)
                 {
                     status_txt.Text = "";
                 }
-                System.Windows.Forms.Button btn_clicked = sender as System.Windows.Forms.Button;
-                calcEngine.trig_fcns(btn_clicked.Name);
+
+                Button btnClicked = sender as Button;
+                CalcEngine.trig_fcns(btnClicked.Name);
                 updateScreen();
             }
         }
 
-        //Toggles the display mode for angles
+        // Toggles the display mode for angles
         private void toggleMode_btn(object sender, EventArgs e)
         {
-            if (!calcEngine.m_openParen)
+            if (!CalcEngine.m_openParen)
             {
                 status_txt.Text = "";
             }
-            if (sender is System.Windows.Forms.Button)
+            if (sender is Button)
             {
-                System.Windows.Forms.Button radio_btn = sender as System.Windows.Forms.Button;
-                toggleMode(radio_btn.Name);
+                Button radioBtn = sender as Button;
+                ToggleMode(radioBtn.Name);
                 updateScreen();
             }
         }
         
-        //Updates the engine angle display mode based on the provided string
-        private void toggleMode(String n)
+        // Updates the engine angle display mode based on the provided string
+        private void ToggleMode(string n)
         {
             switch (n)
             {
@@ -252,7 +249,7 @@ namespace Calculator
                     {
                         radian_btn.Checked = true;
                         degrees_btn.Checked = false;
-                        calcEngine.m_useRadians = true;
+                        CalcEngine.m_useRadians = true;
                         status_txt.Text = "Radian Mode";
                     } break;
                 case "degrees_btn":
@@ -260,28 +257,26 @@ namespace Calculator
                     {
                         degrees_btn.Checked = true;
                         radian_btn.Checked = false;
-                        calcEngine.m_useRadians = false;
+                        CalcEngine.m_useRadians = false;
                         status_txt.Text = "Degree Mode";
                     }
                     break;
-
             }
-
         }
 
-        //Performs some misc function on the calcEngine based on the button that was pressed
-        //(Again, everything here is merely updating the screen, but the calcEngine variable holds the true state of things)
+        // Performs some misc function on the calcEngine based on the button that was pressed
+        // (Again, everything here is merely updating the screen, but the calcEngine variable holds the true state of things)
         private void other_btn(object sender, EventArgs e)
         {
             status_txt.Text = "";
-            if (sender is System.Windows.Forms.Button)
+            if (sender is Button)
             {
-                System.Windows.Forms.Button btn_clicked = sender as System.Windows.Forms.Button;
-                if (btn_clicked.Name.Equals("close_paren"))
+                Button btnClicked = sender as Button;
+                if (btnClicked.Name.Equals("close_paren"))
                 {
-                    if (calcEngine.m_openParen)
+                    if (CalcEngine.m_openParen)
                     {
-                        status_txt.Text = calcEngine.equation + calcEngine.getDisplay().ToString();
+                        status_txt.Text = CalcEngine.equation + CalcEngine.GetDisplay().ToString();
                         paren_txt.Text = "";
                         operation_txt.Text = "";
                     }
@@ -290,9 +285,9 @@ namespace Calculator
                         status_txt.Text = "You most open the parentheses first";
                     }
                 }
-                else if (btn_clicked.Name.Equals("open_paren"))
+                else if (btnClicked.Name.Equals("open_paren"))
                 {
-                    if (calcEngine.m_closeParen)
+                    if (CalcEngine.m_closeParen)
                     {
                         paren_txt.Text = "(...)";
                         operation_txt.Text = "";
@@ -302,57 +297,58 @@ namespace Calculator
                         status_txt.Text = "Parentheses already opened";
                     }
                 }
-                else if (btn_clicked.Name.Equals("percent"))
+                else if (btnClicked.Name.Equals("percent"))
                 {
-                    if (calcEngine.m_openParen)
+                    if (CalcEngine.m_openParen)
                     {
                         status_txt.Text = "% is disabled for parenthetical operations";
                     }
                 }
-                else if (btn_clicked.Name.Equals("inverse"))
+                else if (btnClicked.Name.Equals("inverse"))
                 {
-                    if (Convert.ToDouble(calcEngine.input) == 0)
+                    if (Convert.ToDouble(CalcEngine.input) == 0)
                     {
                         status_txt.Text = "Can't inverse zero";
                     }
                 }
-                else if (btn_clicked.Name.Equals("backspace"))
+                else if (btnClicked.Name.Equals("backspace"))
                 {
-                    if (calcEngine.input.Equals("."))
+                    if (CalcEngine.input.Equals("."))
                     {
                         status_txt.Text = "Nothing to Backspace";
                     }
                 }
-                else if (btn_clicked.Name.Equals("decimal_btn"))
+                else if (btnClicked.Name.Equals("decimal_btn"))
                 {
-                    btn_clicked.Name = "decimal";
+                    btnClicked.Name = "decimal";
                 }
-                else if (btn_clicked.Name.Equals("sqrt"))
+                else if (btnClicked.Name.Equals("sqrt"))
                 {
-                    if (calcEngine.getDisplay()<0)
+                    if (CalcEngine.GetDisplay()<0)
                     {
                         status_txt.Text = "Invalid operation attempted";
                     }
                 }
-                calcEngine.other_fcns(btn_clicked.Name);
+
+                CalcEngine.other_fcns(btnClicked.Name);
                 updateScreen();
             }
         }
 
-        //Other functions possible here
+        // Other functions possible here
         private void calcScreen_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        //Show the about menu
+        // Show the about menu
         private void about_Popup(object sender, EventArgs e)
         {
             popUp.ShowDialog();
         }
 
-        //Keyboard shortcuts
-        private void getKey(char c)
+        // Keyboard shortcuts
+        private void GetKey(char c)
         {
             switch (c)
             {
@@ -410,8 +406,8 @@ namespace Calculator
             }
         }
 
-        //Performs an action based on the given key value
-        private void getKey(Keys k)
+        // Performs an action based on the given key value
+        private void GetKey(Keys k)
         {
             switch (k)
             {
@@ -430,33 +426,37 @@ namespace Calculator
             }
         }
 
-        //Deal with keyboard press events
+        // Deal with keyboard press events
         private void Calculator_KeyPress(object sender, KeyPressEventArgs e)
         {
-            getKey(e.KeyChar);
+            GetKey(e.KeyChar);
         }
+
         private void Calculator_KeyDown(object sender, KeyEventArgs e)
         {
-            getKey(e.KeyCode);
+            GetKey(e.KeyCode);
         }
 
         //Format the display based on if commas are on or not
-        private String formatDisplay(String tempstr)
+        private string FormatDisplay(String tempstr)
         {
-            String dec = "";
+            string dec = "";
             int totalCommas = 0;
             int pos = 0;
             bool addNegative = false;
+
             if (tempstr.StartsWith("-"))
             {
                 tempstr = tempstr.Remove(0, 1);
                 addNegative = true;
             }
+
             if (tempstr.IndexOf(".") > -1)
             {
                 dec = tempstr.Substring(tempstr.IndexOf("."), tempstr.Length - tempstr.IndexOf("."));
                 tempstr = tempstr.Remove(tempstr.IndexOf("."), tempstr.Length - tempstr.IndexOf("."));
             }
+
             if (m_useCommaSeparators && Convert.ToDouble(tempstr) < Math.Pow(10, 19))
             {
                 if (tempstr.Length > 3)
@@ -467,6 +467,7 @@ namespace Calculator
                         totalCommas--;
                     }
                     pos = tempstr.Length - 3;
+
                     while (totalCommas > 0)
                     {
                         tempstr = tempstr.Insert(pos, ",");
@@ -475,11 +476,13 @@ namespace Calculator
                     }
                 }
             }
+
             tempstr += "" + dec;
             if (tempstr.IndexOf(".") == -1)
             {
                 tempstr = tempstr + ".";
             }
+
             if (tempstr.IndexOf(".") == 0)
             {
                 tempstr.Insert(0, "0");
@@ -488,15 +491,17 @@ namespace Calculator
             {
                 tempstr = tempstr.Remove(tempstr.Length - 1);
             }
+
             if (addNegative)
             {
                 tempstr = tempstr.Insert(0, "-");
             }
+
             return tempstr;
         }
 
-        //Toggle comma separators
-        private void menu_Actions(String n)
+        // Toggle comma separators
+        private void menu_Actions(string n)
         {
             switch (n)
             {
@@ -517,7 +522,7 @@ namespace Calculator
                     }
                     break;
                 case "copy_btn":
-                    Clipboard.SetDataObject(calcEngine.input, true);
+                    Clipboard.SetDataObject(CalcEngine.input, true);
                     break;
                 case "paste_btn":
                     try
@@ -529,14 +534,15 @@ namespace Calculator
                         status_txt.Text = "Invalid number in Clipboard";
                         break;
                     }
-                    calcEngine.input = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
+
+                    CalcEngine.input = Clipboard.GetDataObject().GetData(DataFormats.Text).ToString();
                     updateScreen();
                     break;
 
             }
         }
 
-        //Used to get the internet browser path for showing the documentation
+        // Used to get the internet browser path for showing the documentation
         private static string GetDefaultBrowserPath()
         {
             string key = @"htmlfile\shell\open\command";
@@ -545,8 +551,8 @@ namespace Calculator
             return ((string) registryKey.GetValue(null, null)).Split('"')[1];
         }
 
-        //Used to show the documentation in the user's browser
-        private void helpPopup(object sender, EventArgs e)
+        // Used to show the documentation in the user's browser
+        private void HelpPopup(object sender, EventArgs e)
         {
             string defaultBrowserPath = GetDefaultBrowserPath();
             try
@@ -558,8 +564,6 @@ namespace Calculator
             {
                 MessageBox.Show(exp.Message);
             }
-
         }
-
     }
 }
