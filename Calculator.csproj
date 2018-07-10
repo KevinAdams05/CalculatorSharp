@@ -113,6 +113,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="TestHarness.cs" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="calculator.ico" />
