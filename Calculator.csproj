@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Calculator</RootNamespace>
-    <AssemblyName>Calculator#</AssemblyName>
+    <AssemblyName>CalculatorSharp</AssemblyName>
     <ApplicationIcon>calculator.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>81FB9F41F7AF2C5D10FDCCCD958D0B386D28EF34</ManifestCertificateThumbprint>

@@ -640,7 +640,7 @@ namespace Calculator
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status_txt});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 265);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 264);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(334, 22);
             this.statusStrip1.TabIndex = 62;
@@ -664,7 +664,7 @@ namespace Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 287);
+            this.ClientSize = new System.Drawing.Size(334, 286);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.sin);
@@ -714,9 +714,9 @@ namespace Calculator
             this.MaximumSize = new System.Drawing.Size(350, 325);
             this.MinimumSize = new System.Drawing.Size(350, 325);
             this.Name = "Calculator";
-            this.Text = "Calculator #";
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Calculator_KeyPress);
+            this.Text = "Calculator Sharp";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Calculator_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Calculator_KeyPress);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

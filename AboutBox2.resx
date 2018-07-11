@@ -260,4 +260,17 @@
         ////////////////////////////////////////////////////////
 </value>
   </data>
+  <data name="textBoxDescription.Text" xml:space="preserve">
+    <value>Based on Calculator#, by Greg McLeod
+
+Authors:
+Kevin Adams
+Greg McLeod (original author)
+
+Change Log:
+1.3.0 
+- Forked from Calculator#
+- Updated to Framework 4.6.2
+- Misc. format and style changes</value>
+  </data>
 </root>
