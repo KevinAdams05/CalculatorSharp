@@ -40,8 +40,8 @@ namespace Calculator
             this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
             this.logoPictureBox.Location = new System.Drawing.Point(12, 12);
             this.logoPictureBox.Name = "logoPictureBox";
-            this.logoPictureBox.Size = new System.Drawing.Size(55, 61);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.logoPictureBox.Size = new System.Drawing.Size(64, 64);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.logoPictureBox.TabIndex = 12;
             this.logoPictureBox.TabStop = false;
             // 
@@ -49,7 +49,7 @@ namespace Calculator
             // 
             this.okButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(289, 241);
+            this.okButton.Location = new System.Drawing.Point(292, 241);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 24;
@@ -59,13 +59,13 @@ namespace Calculator
             // textBoxDescription
             // 
             this.textBoxDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBoxDescription.Location = new System.Drawing.Point(79, 39);
+            this.textBoxDescription.Location = new System.Drawing.Point(85, 39);
             this.textBoxDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxDescription.Size = new System.Drawing.Size(285, 196);
+            this.textBoxDescription.Size = new System.Drawing.Size(282, 196);
             this.textBoxDescription.TabIndex = 25;
             this.textBoxDescription.TabStop = false;
             this.textBoxDescription.Text = resources.GetString("textBoxDescription.Text");
@@ -74,7 +74,7 @@ namespace Calculator
             // 
             this.labelProductName.AutoSize = true;
             this.labelProductName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelProductName.Location = new System.Drawing.Point(76, 12);
+            this.labelProductName.Location = new System.Drawing.Point(82, 12);
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(123, 16);
             this.labelProductName.TabIndex = 26;
@@ -84,7 +84,7 @@ namespace Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(376, 276);
+            this.ClientSize = new System.Drawing.Size(383, 276);
             this.Controls.Add(this.labelProductName);
             this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.logoPictureBox);

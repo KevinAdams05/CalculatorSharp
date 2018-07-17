@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="calculator.ico" />
+    <Content Include="calculator.png" />
     <None Include="Documentation.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
